@@ -1,0 +1,23 @@
+header {
+    background: #111;
+
+    h4 {
+        color: #fff;
+        text-align: center;
+    }
+
+    nav {
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+
+        div {
+            width: 20%;
+            margin-bottom: 20px;
+        }
+
+    }
+
+
+}

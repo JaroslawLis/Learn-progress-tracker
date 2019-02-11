@@ -10,9 +10,17 @@ $(document).ready(function () {
             add_elements_form(e.target.dataset.taskid, e.target.dataset.taskname, e.target.dataset.taskbegindate);
         } else if (myElement.className == 'edit_elements') {
             $('div#table_div').addClass('blur');
+            console.log(e.target.dataset.taskid);
             edit_elements_form(e.target.dataset.taskid, e.target.dataset.taskname, e.target.dataset.taskbegindate)
         } else if (myElement.className == 'stats') {
-            show_stats(e.target.dataset.taskid, e.target.dataset.taskname, e.target.dataset.taskbegindate, e.target);
+
+            let $target = $(e.target).parent().parent().next().next();
+            //console.log($target);
+            $target.toggleClass('active');
+            if ($target.hasClass('active')) {
+                console.log('wtw');
+                show_stats(e.target.dataset.taskid, e.target.dataset.taskname, e.target.dataset.taskbegindate, $target);
+            }
         }
 
 
@@ -82,6 +90,7 @@ $(document).ready(function () {
                     // console.dir(response);
                     $('#add_elements').hide(300);
                     $('div#table_div').removeClass('blur');
+                    alertify.success("Dodano etapy");
                     showDataDiv();
                 }
             });
@@ -126,10 +135,12 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     // console.dir(response);
+
                     $('.input_data_in_form').remove();
                     $('#add_elements').hide(300);
                     $('div#table_div').removeClass('blur');
                     display_progress_bar()
+                    alertify.success("Oznaczono elementy");
                 }
             })
             $('#start_course').val('');
@@ -139,9 +150,9 @@ $(document).ready(function () {
 
     };
 
-    function show_stats(taskid, taskname, taskbegindate, etarget) {
-        console.log(taskid);
-        let $target = $(etarget).parent().parent().next().next();
+    function show_stats(taskid, taskname, taskbegindate, $target) {
+        //console.log(taskid);
+        //let $target = $(etarget).parent().parent().next().next();
         //console.log($target);
         $.ajax({
             type: 'POST',
@@ -152,13 +163,13 @@ $(document).ready(function () {
             },
 
             success: function (response) {
-                console.log(response.done_stages);
+                // console.log(response.done_stages);
                 $target.empty();
                 let average = response.done_stages / response.days_pass;
                 let average_by_7_days = response.done_for_7_days / 7;
                 let average_by_30_days = response.done_for_30_days / 30;
                 if (response.done_stages > 0) {
-                    $target.append(`<div class="row_stats"><div>średnia : </div><div>${average.toFixed(2)}</div></div><div class="row_stats"><div>Przy tej średniej kurs ukonczysz za: </div><div>${Math.ceil(response.left_stages / average)} dni</div></div>`);
+                    $target.append(`<div class="row_stats"><div class="main_average">średnia : </div><div>${average.toFixed(2)}</div></div><div class="row_stats"><div>Przy tej średniej kurs ukonczysz za: </div><div>${Math.ceil(response.left_stages / average)} dni</div></div>`);
                 } else {
                     $target.append('<p>brak statystyk</p>');
                 }
@@ -185,8 +196,9 @@ $(document).ready(function () {
 
                 $.each(response, function (index) {
                     let row_table = $("<div></div>").addClass("row_table");
-                    let progress_bar_div = $("<div><div></div></div>").addClass("progress_bar");
-                    let stats_div = $("<div></div>").addClass("stats");
+                    let progress_bar_div = $("<div><div></div></div>").addClass("progress_bar").attr('data-taskid', response[index].idtask);
+
+                    let stats_div = $("<div></div>").addClass("stats_data");
                     $('#table_div').append(row_table);
                     var number = response.indexOf(response[index]) + 1;
                     row_table.append(`<div>${number}</div><div class="task-in-table1">${response[index].task}</div><div class="date-in-table1">${response[index].begindate}</div><div class="deadline_date1">${response[index].deadline}</div><div class="priority1">${response[index].priority}</div><div><button class="stats" data-taskid="${response[index].idtask}" data-taskname="${response[index].task}"  data-taskbegindate="${response[index].begindate}">Statystyki</button></div><div><button class="edit_elements" data-taskid="${response[index].idtask}" data-taskname="${response[index].task}"  data-taskbegindate="${response[index].begindate}">Edycja</button></div><div><button class="subtask" data-taskid="${response[index].idtask}" data-taskname="${response[index].task}"  data-taskbegindate="${response[index].begindate}">Dodaj etapy</button></div>`);
@@ -232,10 +244,153 @@ $(document).ready(function () {
     // listeners
 
     $('#table_div').on('click', main_table_click);
+    $('#animation').on('click', animation_progress);
 
+    // var call1 = $.get('data_for_animation_progress.php', function (response1) {
+
+    //     return response1;
+    // });
+
+    // var call2 = $.get('get_all_stages.php', function (response2) {
+    //     return response2;
+    // });
+    // $.when(call1, call2).then(function (response1, response2) {
+    //     console.log(response1[0]);
+    //     var x = {};
+
+    //     var z = response2[0].map((el) => el);
+
+    //     console.log(z);
+
+
+    // });
+
+    // $.ajax({
+    //     type: 'get',
+    //     url: 'data_for_animation_progress.php',
+    //     success: function (response) {
+    //         console.log(response);
+    //         return respons_table;
+
+    //     }
+    // });
+    function animation_progress() {
+
+
+        let bars = document.querySelectorAll('.progress_bar');
+        bars = [...bars];
+
+        bars.forEach(function (element, index) {
+            // console.log();
+            // console.dir(element, index);
+            element.childNodes[0].style.width = 0 + '%';
+            element.childNodes[0].textContent = 0 + '%';
+        });
+
+
+        $.ajax({
+            type: 'get',
+            url: 'get_all_stages.php',
+            success: function (response) {
+                console.log(response);
+                show_animation_progress(response);
+
+
+            }
+        });
+    }
+
+
+    function show_animation_progress(data) {
+        let bars = document.querySelectorAll('.progress_bar');
+        bars = [...bars];
+
+        let counter = 0;
+        let time = setInterval(function () {
+            if (counter > 60) {
+                clearInterval(time);
+            } else {
+                // console.log(counter);
+
+                //console.log(counter);
+                //console.log(data);
+                document.querySelector('#counter').innerHTML = counter;
+
+                bars.forEach(function (element, index) {
+                    let row_id = element.dataset.taskid;
+                    //console.log(element, index);
+                    //console.log(data[counter][index]);
+                    let data_for_progress_bar = data[counter];
+                    console.log(data_for_progress_bar);
+                    data_for_progress_bar.forEach(function (item, index) {
+                        if (item.idtask == row_id) {
+                            console.log('ok');
+                            let done_s = item.done_stages;
+                            let all_s = item.all_stages;
+                            let progress = (done_s / all_s * 100).toFixed(2);
+                            element.childNodes[0].style.width = progress + '%';
+                            element.childNodes[0].textContent = progress + '%';
+
+
+
+                        }
+                    })
+                    // if (data[counter][index]) {
+
+                    //     render_progress_bar(data[counter][index], row_id, element);
+                    //     // let done_s = data[counter][index].done_stages;
+                    //     // let all_s = data[counter][index].all_stages;
+                    //     // let progress = (done_s / all_s * 100).toFixed(2);
+                    //     // element.childNodes[0].style.width = progress + '%';
+                    //     // element.childNodes[0].textContent = progress + '%';
+                    // }
+
+
+                });
+                counter++;
+            }
+        }, 500);
+
+
+        function display_counter(counter) {
+
+            document.querySelector('#counter').innerHTML = counter;
+
+        }
+
+        function render_progress_bar(data, row_id, element) {
+            // console.log(data.idtask, row_id);
+            // console.log(element);
+            if (data.idtask != row_id) {
+                return false;
+
+            } else {
+
+                console.log(data.idtask, row_id);
+                let done_s = data.done_stages;
+                let all_s = data.all_stages;
+                let progress = (done_s / all_s * 100).toFixed(2);
+                element.childNodes[0].style.width = progress + '%';
+                element.childNodes[0].textContent = progress + '%';
+            }
+        }
+
+
+
+
+
+
+    }
     // const main_table = document.querySelector('#table_div');
     // main_table.addEventListener('click', main_table_click);
-
+    // if (data[counter][index]) {
+    //     function render_progress_bar()
+    //     let done_s = data[counter][index].done_stages;
+    //     let all_s = data[counter][index].all_stages;
+    //     let progress = (done_s / all_s * 100).toFixed(2);
+    //     element.childNodes[0].style.width = progress + '%';
+    //     element.childNodes[0].textContent = progress + '%';
+    // }
 
 
 })

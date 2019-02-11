@@ -8,14 +8,44 @@
     <title>Learn Tracker</title>
     <script src="vendor/jquery/jquery-3.3.1.min.js"></script>
     <script src="vendor/jquery/jquery-ui.min.js"></script>
+
     <script src="vendor/alertify/alertify.min.js"></script>
     <script src="script.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="vendor/alertify/alertify.core.css" />
+
+    <link rel="stylesheet" href="vendor/alertify/alertify.default.css"  id="toggleCSS" />
+
+    <link rel="stylesheet" href="css\style.css">
+
+
 </head>
 
 <body>
 <header>
+    <h4>Learn Progress Tracker</h4>
+     <nav>
+      <!--   <ul>
+        <li><a href="#" id="animation">Progresja</a></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul> -->
+    <div>
+        <button type="button" class="btn" id="animation">progresja</button>
+    </div>
+    <div>
+        <button type="button" class="btn" id=""></button>
+    </div>
+    <div>
+        <button type="button" class="btn" id=""></button>
+    </div>
+    <div>
+        <button type="button" class="btn" id=""></button>
+    </div>
+    </nav>
 </header>
+<div id="counter"></div>
  <main>
 <div id="table_div">
 </div>
@@ -41,6 +71,7 @@
 
 
 </main>
+
 </body>
 
 </html>
