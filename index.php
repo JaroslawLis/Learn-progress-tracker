@@ -35,10 +35,10 @@
         <button type="button" class="btn" id="animation">progresja</button>
     </div>
     <div>
-        <button type="button" class="btn" id=""></button>
+        <button type="button" class="btn" id="all_courses">Wszystkie kursy</button>
     </div>
     <div>
-        <button type="button" class="btn" id=""></button>
+        <button type="button" class="btn" id="courses_in_progress">Kursy w toku</button>
     </div>
     <div>
         <button type="button" class="btn" id=""></button>

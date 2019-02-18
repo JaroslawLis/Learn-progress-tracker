@@ -70,17 +70,6 @@ header nav ul li:hover:after {
   transform: translateX(-5%) translateY(-25%) rotate(45deg);
 }
 
-div#counter {
-  background-color: #ddd;
-  border: 2px solid black;
-  border-radius: 50%;
-  line-height: 40px;
-  font-size: 30px;
-  margin: 0 auto;
-  text-align: center;
-  width: 40px;
-}
-
 div#table_div {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -446,5 +435,20 @@ header nav div {
   opacity: 1;
   -webkit-transition: .7s;
   transition: .7s;
+}
+
+div#counter {
+  position: fixed;
+  display: none;
+  right: 100px;
+  top: 10px;
+  background-color: #ddd;
+  border: 2px solid black;
+  border-radius: 5px;
+  line-height: 40px;
+  font-size: 30px;
+  margin: 0 auto;
+  text-align: center;
+  min-width: 30%;
 }
 /*# sourceMappingURL=style.css.map */

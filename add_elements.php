@@ -1,5 +1,5 @@
 <?php
- print_r($_POST);
+
  include('dbconnect.php');
 $idtask = $_POST['idtask'];
 $date_task = $_POST['taskbegindate'];

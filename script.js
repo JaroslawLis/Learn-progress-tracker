@@ -1,6 +1,6 @@
 $(document).ready(function () {
-
-    showDataDiv();
+    let all_of_tasks = false;
+    showDataDiv(all_of_tasks);
 
     function main_table_click(e) {
         const myElement = e.target;
@@ -163,7 +163,7 @@ $(document).ready(function () {
             },
 
             success: function (response) {
-                // console.log(response.done_stages);
+                console.log(response.done_stages, response.days_pass);
                 $target.empty();
                 let average = response.done_stages / response.days_pass;
                 let average_by_7_days = response.done_for_7_days / 7;
@@ -173,23 +173,27 @@ $(document).ready(function () {
                 } else {
                     $target.append('<p>brak statystyk</p>');
                 }
-                if (response.days_pass >= 7) {
+                if (response.days_pass >= 7 && response.done_for_7_days > 0) {
                     $target.append(`<div class="row_stats"><div>średnia z ostatnich 7 dni: </div><div>${average_by_7_days.toFixed(2)}</div></div><div class="row_stats"><div>Przy tej średniej kurs ukończysz za: </div><div>${Math.ceil(response.left_stages / average_by_7_days)} dni</div></div>`);
                 }
-                if (response.days_pass >= 30) {
+                if (response.days_pass >= 30 && response.done_for_30_days > 0) {
                     $target.append(`<div class="row_stats"><div>średnia z ostatnich 30 dni: </div><div>${average_by_30_days.toFixed(2)}</div></div><div class="row_stats"><div>Przy tej średniej kurs ukończysz za: </div><div>${Math.ceil(response.left_stages / average_by_30_days)} dni</div></div>`);
                 }
             }
         });
     }
 
-    function showDataDiv() {
+    function showDataDiv(all_of_tasks) {
         // $('#container').hide();
         $('#table_div').empty();
 
         $.ajax({
             type: 'GET',
             url: 'show_data.php',
+            data: {
+                all_of_tasks: all_of_tasks,
+
+            },
             success: function (response) {
 
                 $('#table_div').append('<div class="row_table"><div>nr</div><div>Zadanie</div><div>Data rozp.</div><div>Termin</div><div>Pr.</div><div></div><div></div><div></div></div>');
@@ -207,20 +211,24 @@ $(document).ready(function () {
 
                 });
 
-                display_progress_bar();
+                display_progress_bar(all_of_tasks);
             }
 
         });
 
     }
 
-    function display_progress_bar() {
+    function display_progress_bar(all_of_tasks) {
         let bars = document.querySelectorAll('.progress_bar');
         bars = [...bars];
 
         $.ajax({
             type: 'GET',
             url: 'get_average_data.php',
+            data: {
+                all_of_tasks: all_of_tasks,
+
+            },
             success: function (response) {
                 //console.log(response, bars);
                 bars.forEach(function (element, index) {
@@ -244,36 +252,23 @@ $(document).ready(function () {
     // listeners
 
     $('#table_div').on('click', main_table_click);
-    $('#animation').on('click', animation_progress);
+    $('nav').on('click', nav_click);
 
-    // var call1 = $.get('data_for_animation_progress.php', function (response1) {
-
-    //     return response1;
-    // });
-
-    // var call2 = $.get('get_all_stages.php', function (response2) {
-    //     return response2;
-    // });
-    // $.when(call1, call2).then(function (response1, response2) {
-    //     console.log(response1[0]);
-    //     var x = {};
-
-    //     var z = response2[0].map((el) => el);
-
-    //     console.log(z);
+    function nav_click(e) {
+        const myElement = e.target
+        if (myElement.id === "animation") {
+            animation_progress()
+        } else if (myElement.id === "all_courses") {
+            all_of_tasks = true;
+            showDataDiv(all_of_tasks);
+        } else if (myElement.id === "courses_in_progress") {
+            all_of_tasks = false;
+            showDataDiv(all_of_tasks);
+        }
 
 
-    // });
+    }
 
-    // $.ajax({
-    //     type: 'get',
-    //     url: 'data_for_animation_progress.php',
-    //     success: function (response) {
-    //         console.log(response);
-    //         return respons_table;
-
-    //     }
-    // });
     function animation_progress() {
 
 
@@ -298,24 +293,26 @@ $(document).ready(function () {
 
             }
         });
+
     }
 
 
     function show_animation_progress(data) {
         let bars = document.querySelectorAll('.progress_bar');
         bars = [...bars];
-
+        let currentday = (new Date).getTime();
+        const msInADay = 24 * 60 * 60 * 1000;
+        let startday = currentday - 60 * msInADay;
         let counter = 0;
+        $('#counter').show();
         let time = setInterval(function () {
             if (counter > 60) {
                 clearInterval(time);
+                $('#counter').hide();
             } else {
-                // console.log(counter);
 
-                //console.log(counter);
-                //console.log(data);
-                document.querySelector('#counter').innerHTML = counter;
-
+                document.querySelector('#counter').innerHTML = (new Date(startday)).toDateString();
+                startday += msInADay;
                 bars.forEach(function (element, index) {
                     let row_id = element.dataset.taskid;
                     //console.log(element, index);
@@ -335,15 +332,7 @@ $(document).ready(function () {
 
                         }
                     })
-                    // if (data[counter][index]) {
 
-                    //     render_progress_bar(data[counter][index], row_id, element);
-                    //     // let done_s = data[counter][index].done_stages;
-                    //     // let all_s = data[counter][index].all_stages;
-                    //     // let progress = (done_s / all_s * 100).toFixed(2);
-                    //     // element.childNodes[0].style.width = progress + '%';
-                    //     // element.childNodes[0].textContent = progress + '%';
-                    // }
 
 
                 });
@@ -374,7 +363,6 @@ $(document).ready(function () {
                 element.childNodes[0].textContent = progress + '%';
             }
         }
-
 
 
 

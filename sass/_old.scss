@@ -70,16 +70,6 @@ header nav ul li:hover:after {
     transform: translateX(-5%) translateY(-25%) rotate(45deg);
 }
 
-div#counter {
-    background-color: #ddd;
-    border: 2px solid black;
-    border-radius: 50%;
-    line-height: 40px;
-    font-size: 30px;
-    margin: 0 auto;
-    text-align: center;
-    width: 40px;
-}
 
 div#table_div {
     display: flex;
