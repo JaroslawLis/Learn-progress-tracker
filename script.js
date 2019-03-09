@@ -230,7 +230,8 @@ $(document).ready(function () {
 
             },
             success: function (response) {
-
+                // console.log(response);
+                // debugger
                 bars.forEach(function (element, index) {
 
                     element.childNodes[0].style.width = response[index].progress + '%';

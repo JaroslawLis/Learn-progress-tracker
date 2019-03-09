@@ -6,16 +6,16 @@ $all_of_tasks = $_GET['all_of_tasks'];
  $average_data_query= "select t.idtask, t.task, count(s.idsubtask) as all_stages,
 count(s.enddate_subtask) as  done_stages,
 round(count(s.enddate_subtask)/count(s.idsubtask)*100,2) as progress
-from taskmanagement.tasks as t left join taskmanagement.subtasks as s on
+from ".$db_name.".tasks as t left join ".$db_name.".subtasks as s on
 t.idtask=s.idtask
 where t.category=4 AND enddate IS NULL
 group by t.idtask;";
-
+//echo $average_data_query;
 if ($all_of_tasks === 'true') {
     $average_data_query= "select t.idtask, t.task, count(s.idsubtask) as all_stages,
 count(s.enddate_subtask) as  done_stages,
 round(count(s.enddate_subtask)/count(s.idsubtask)*100,2) as progress
-from taskmanagement.tasks as t left join taskmanagement.subtasks as s on
+from ".$db_name.".tasks as t left join ".$db_name.".subtasks as s on
 t.idtask=s.idtask
 where t.category=4
 group by t.idtask;";

@@ -1,15 +1,13 @@
 <?php
 include('dbconnect.php');
-//print_r($_GET);
 
 $all_of_tasks = $_GET['all_of_tasks'];
-
-//echo $all_of_tasks;
 $sql = "select * from tasks where category=4 AND enddate IS NULL";
-if ($all_of_tasks === 'true') {
+
+if ($all_of_tasks == 'true') {
     $sql = "select * from tasks where category=4";
 }
-//echo $sql;
+
 $sql_not_done = "select * from tasks where category=4 AND enddate IS NULL";
 $result = mysqli_query($conn, $sql) or die ("error" . mysqli_error($conn));
 

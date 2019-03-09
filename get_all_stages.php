@@ -26,7 +26,7 @@ for($i = $days; $i >= 0; $i--)
 {
 
  $average_data_query= "select t.idtask, t.task,  count(enddate_subtask)   as  done_stages
-from taskmanagement.tasks as t left join taskmanagement.subtasks as s on
+from ".$db_name.".tasks as t left join ".$db_name.".subtasks as s on
 t.idtask=s.idtask
 where t.category=4 AND s.enddate_subtask < DATE_SUB(NOW() , INTERVAL '".$i."' DAY)
 group by t.idtask;";
