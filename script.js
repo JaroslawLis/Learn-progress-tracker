@@ -91,7 +91,7 @@ $(document).ready(function () {
                     $('#add_elements').hide(300);
                     $('div#table_div').removeClass('blur');
                     alertify.success("Dodano etapy");
-                    showDataDiv();
+                    showDataDiv(all_of_tasks);
                 }
             });
 
@@ -139,7 +139,7 @@ $(document).ready(function () {
                     $('.input_data_in_form').remove();
                     $('#add_elements').hide(300);
                     $('div#table_div').removeClass('blur');
-                    display_progress_bar()
+                    display_progress_bar(all_of_tasks);
                     alertify.success("Oznaczono elementy");
                 }
             })
@@ -230,10 +230,9 @@ $(document).ready(function () {
 
             },
             success: function (response) {
-                //console.log(response, bars);
+
                 bars.forEach(function (element, index) {
-                    // console.log();
-                    // console.dir(element, index);
+
                     element.childNodes[0].style.width = response[index].progress + '%';
                     element.childNodes[0].textContent = response[index].progress + '%';
                 });
@@ -244,7 +243,7 @@ $(document).ready(function () {
 
 
 
-        // console.log(bars[0]);
+
 
 
     }
@@ -274,10 +273,8 @@ $(document).ready(function () {
 
         let bars = document.querySelectorAll('.progress_bar');
         bars = [...bars];
-
+        // reset the progress bars on the screen
         bars.forEach(function (element, index) {
-            // console.log();
-            // console.dir(element, index);
             element.childNodes[0].style.width = 0 + '%';
             element.childNodes[0].textContent = 0 + '%';
         });
@@ -286,8 +283,11 @@ $(document).ready(function () {
         $.ajax({
             type: 'get',
             url: 'get_all_stages.php',
+            data: {
+                all_of_tasks: all_of_tasks,
+
+            },
             success: function (response) {
-                console.log(response);
                 show_animation_progress(response);
 
 
@@ -298,15 +298,18 @@ $(document).ready(function () {
 
 
     function show_animation_progress(data) {
+
+        let duration_days = data.days;
+
         let bars = document.querySelectorAll('.progress_bar');
         bars = [...bars];
         let currentday = (new Date).getTime();
         const msInADay = 24 * 60 * 60 * 1000;
-        let startday = currentday - 60 * msInADay;
+        let startday = currentday - duration_days * msInADay;
         let counter = 0;
         $('#counter').show();
         let time = setInterval(function () {
-            if (counter > 60) {
+            if (counter > duration_days) {
                 clearInterval(time);
                 $('#counter').hide();
             } else {
@@ -355,7 +358,7 @@ $(document).ready(function () {
 
             } else {
 
-                console.log(data.idtask, row_id);
+                // console.log(data.idtask, row_id);
                 let done_s = data.done_stages;
                 let all_s = data.all_stages;
                 let progress = (done_s / all_s * 100).toFixed(2);
