@@ -1,0 +1,44 @@
+div#table_div {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    width: 90%;
+    margin: 0 auto;
+    border: 4px solid lightblue;
+    font-size: 1.25em;
+    background: #d1d1d1;
+
+    div.row_table {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: stretch;
+
+        width: 100%;
+        flex-basis: 40px;
+        background: #d1d1d1;
+    }
+
+    div.progress_bar {
+        font-family: arial;
+        margin: 0 auto;
+        width: 99%;
+        line-height: 25px;
+        border-radius: 9px;
+        padding: 3px;
+        background: #333;
+
+
+
+        div {
+            background: orange;
+            border-radius: 5px;
+            height: 100%;
+            text-align: center;
+            color: white;
+            width: 0;
+            transition: all .4s linear;
+        }
+    }
+
+}

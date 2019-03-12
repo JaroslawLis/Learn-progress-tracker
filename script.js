@@ -10,7 +10,7 @@ $(document).ready(function () {
             add_elements_form(e.target.dataset.taskid, e.target.dataset.taskname, e.target.dataset.taskbegindate);
         } else if (myElement.className == 'edit_elements') {
             $('div#table_div').addClass('blur');
-            console.log(e.target.dataset.taskid);
+
             edit_elements_form(e.target.dataset.taskid, e.target.dataset.taskname, e.target.dataset.taskbegindate)
         } else if (myElement.className == 'stats') {
 
@@ -18,7 +18,7 @@ $(document).ready(function () {
             //console.log($target);
             $target.toggleClass('active');
             if ($target.hasClass('active')) {
-                console.log('wtw');
+
                 show_stats(e.target.dataset.taskid, e.target.dataset.taskname, e.target.dataset.taskbegindate, $target);
             }
         }
@@ -163,7 +163,7 @@ $(document).ready(function () {
             },
 
             success: function (response) {
-                console.log(response.done_stages, response.days_pass);
+
                 $target.empty();
                 let average = response.done_stages / response.days_pass;
                 let average_by_7_days = response.done_for_7_days / 7;
@@ -322,10 +322,10 @@ $(document).ready(function () {
                     //console.log(element, index);
                     //console.log(data[counter][index]);
                     let data_for_progress_bar = data[counter];
-                    console.log(data_for_progress_bar);
+
                     data_for_progress_bar.forEach(function (item, index) {
                         if (item.idtask == row_id) {
-                            console.log('ok');
+
                             let done_s = item.done_stages;
                             let all_s = item.all_stages;
                             let progress = (done_s / all_s * 100).toFixed(2);

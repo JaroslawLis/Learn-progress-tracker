@@ -62,3 +62,50 @@
          transition: .7s;
      }
  }
+
+ div#table_div button {
+     line-height: 28px;
+     background-color: #9555af;
+     text-align: center;
+     text-decoration: none;
+     margin: 2px 0;
+     border: solid 1px transparent;
+     border-radius: 4px;
+     padding: 0.5em 1em;
+     color: white;
+     width: 90%;
+     padding: 0 5px;
+     transition: .2s;
+
+
+     &:hover {
+         /* box-shadow: 0 0 4px rgba(3, 3, 3, 0.8);
+            opacity: 0.9; */
+         color: #9555af;
+         border-color: currentColor;
+         background-color: white;
+     }
+ }
+
+ // buttons in modal forms
+ div#add_elements_form input#write_elements,
+ button#cancel-writesubtaks_new {
+     line-height: 40px;
+     width: 30%;
+     padding: 0;
+
+     color: white;
+     font-size: 1.15em;
+     background-color: #e02b20;
+     border-color: #e02b20;
+     border-radius: 8px;
+     transition: .2s;
+
+     &:hover {
+         color: #e02b20;
+         border: 2px solid #e02b20;
+         background-color: #fff;
+         opacity: .9;
+     }
+
+ }

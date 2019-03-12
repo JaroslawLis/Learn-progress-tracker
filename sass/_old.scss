@@ -71,34 +71,13 @@ header nav ul li:hover:after {
 }
 
 
-div#table_div {
-    display: flex;
-    flex-flow: column nowrap;
 
-    justify-content: center;
-    width: 90%;
-    margin: 0 auto;
-    border: 4px solid lightblue;
-    font-size: 1.25em;
-    background: #d1d1d1;
-
-}
 
 div.blur {
-    filter: blur(3px);
+    filter: blur(.2px);
 }
 
-div.row_table {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: stretch;
 
-    width: 100%;
-    flex-basis: 40px;
-    background: #d1d1d1;
-
-}
 
 div.row_table:hover,
 div.row_table:nth-child(odd):hover {
@@ -144,28 +123,7 @@ div.row_table div:nth-child(5) {
     text-align: center;
 }
 
-div#table_div button {
-    line-height: 28px;
-    background-color: #9555af;
-    text-align: center;
-    text-decoration: none;
-    margin: 2px 0;
-    border: solid 1px transparent;
-    border-radius: 4px;
-    padding: 0.5em 1em;
-    color: white;
-    width: 90%;
-    padding: 0 5px;
-    transition: .2s;
-}
 
-div#table_div button:hover {
-    /* box-shadow: 0 0 4px rgba(3, 3, 3, 0.8);
-            opacity: 0.9; */
-    color: #9555af;
-    border-color: currentColor;
-    background-color: white;
-}
 
 div#add_elements {
     position: fixed;
@@ -234,20 +192,7 @@ div#add_elements_form .input_data_in_form {
     padding: 20px 10px 20px 10px;
 }
 
-div#add_elements_form input#write_elements,
-button#cancel-writesubtaks_new {
-    line-height: 50px;
-    width: 30%;
-    padding: 0;
 
-    color: white;
-    font-size: 1.15em;
-    background-color: #e02b20;
-    border-color: #e02b20;
-    border-radius: 8px;
-
-
-}
 
 #cancel-writesubtaks_new {
     float: right;
@@ -262,26 +207,7 @@ div#add_elements_form div {
 
 }
 
-.progress_bar {
-    font-family: arial;
-    margin: 0 auto;
-    width: 95%;
-    line-height: 30px;
-    border-radius: 13px;
-    padding: 3px;
-    background: #333;
-}
 
-
-.progress_bar>div {
-    background: orange;
-    border-radius: 9px;
-    height: 100%;
-    text-align: center;
-    color: white;
-    width: 0;
-    transition: all .4s linear;
-}
 
 .stats_data {
     display: none;
