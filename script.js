@@ -183,6 +183,34 @@ $(document).ready(function () {
         });
     }
 
+    function showPeriodStats() {
+        $('#table_div').empty();
+        $.ajax({
+            type: 'GET',
+            url: 'stats.php',
+
+            success: function (response) {
+                console.log(response);
+                $('#table_div').append('<div class="row_table"><div>Numer</div><div>Zadanie</div><div>Bieżąca przerwa</div></div>');
+
+                $.each(response, function (index) {
+                    let row_table = $("<div></div>").addClass("row_table");
+
+                    $('#table_div').append(row_table);
+                    var number = response.indexOf(response[index]) + 1;
+                    row_table.append(`<div>${number}</div><div class="task-in-table1">${response[index].task}</div><div class="date-in-table1">${response[index].period_of_days}</div></div>`);
+
+
+                });
+
+
+            }
+
+        });
+
+
+    }
+
     function showDataDiv(all_of_tasks) {
         // $('#container').hide();
         $('#table_div').empty();
@@ -264,6 +292,9 @@ $(document).ready(function () {
         } else if (myElement.id === "courses_in_progress") {
             all_of_tasks = false;
             showDataDiv(all_of_tasks);
+        } else if (myElement.id === "stats") {
+
+            showPeriodStats(all_of_tasks);
         }
 
 

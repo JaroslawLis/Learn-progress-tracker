@@ -41,7 +41,7 @@
         <button type="button" class="btn" id="courses_in_progress">Kursy w toku</button>
     </div>
     <div>
-        <button type="button" class="btn" id=""></button>
+        <button type="button" class="btn" id="stats">Przerwa w nauce</button>
     </div>
     </nav>
 </header>
