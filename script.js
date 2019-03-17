@@ -190,15 +190,16 @@ $(document).ready(function () {
             url: 'stats.php',
 
             success: function (response) {
-                console.log(response);
-                $('#table_div').append('<div class="row_table"><div>Numer</div><div>Zadanie</div><div>Bieżąca przerwa</div></div>');
+                $('#table_div').append('<div class="stat_table"></div>');
+
+                $('.stat_table').append('<div class="stat_table_row"><div>Numer</div><div>Zadanie</div><div>Bieżąca przerwa</div></div>');
 
                 $.each(response, function (index) {
-                    let row_table = $("<div></div>").addClass("row_table");
+                    let row_table = $("<div></div>").addClass("stat_table_row");
 
-                    $('#table_div').append(row_table);
+                    $('.stat_table').append(row_table);
                     var number = response.indexOf(response[index]) + 1;
-                    row_table.append(`<div>${number}</div><div class="task-in-table1">${response[index].task}</div><div class="date-in-table1">${response[index].period_of_days}</div></div>`);
+                    row_table.append(`<div>${number}</div><div ">${response[index].task}</div><div>${response[index].period_of_days}</div></div>`);
 
 
                 });

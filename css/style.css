@@ -336,6 +336,57 @@ div#table_div div.progress_bar div {
   transition: all .4s linear;
 }
 
+div#table_div div.stat_table {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #b6ccd7;
+}
+
+div#table_div div.stat_table div.stat_table_row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  width: 100%;
+  background: #d1d1d1;
+  margin-bottom: 5px;
+  border-bottom: 1px dotted #000;
+  padding: 3px 0;
+}
+
+div#table_div div.stat_table div.stat_table_row:nth-child(1) {
+  background-color: #BC9C22;
+  text-align: center;
+  font-weight: 700;
+}
+
+div#table_div div.stat_table div.stat_table_row div:nth-child(1) {
+  -ms-flex-preferred-size: 5%;
+      flex-basis: 5%;
+  text-align: center;
+}
+
+div#table_div div.stat_table div.stat_table_row div:nth-child(2) {
+  -ms-flex-preferred-size: 85%;
+      flex-basis: 85%;
+}
+
+div#table_div div.stat_table div.stat_table_row div:nth-child(3) {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  -ms-flex-preferred-size: 10%;
+      flex-basis: 10%;
+  text-align: center;
+}
+
 .btn {
   position: relative;
   background: black;
