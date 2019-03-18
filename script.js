@@ -347,7 +347,8 @@ $(document).ready(function () {
                 $('#counter').hide();
             } else {
 
-                document.querySelector('#counter').innerHTML = (new Date(startday)).toDateString();
+                // document.querySelector('#counter').innerHTML = (new Date(startday)).toDateString();
+                document.querySelector('#counter').innerHTML = dispaly_date((new Date(startday)));
                 startday += msInADay;
                 bars.forEach(function (element, index) {
                     let row_id = element.dataset.taskid;
@@ -415,6 +416,16 @@ $(document).ready(function () {
     //     element.childNodes[0].style.width = progress + '%';
     //     element.childNodes[0].textContent = progress + '%';
     // }
+    function dispaly_date(date) {
+        let day = leadingZero(date.getDate());
+        let month = leadingZero(date.getMonth() + 1);
+        let year = date.getFullYear();
+        return `${day} ${month} ${year}`;
+    }
+
+    function leadingZero(i) {
+        return (i < 10) ? '0' + i : i;
+    }
 
 
 })
