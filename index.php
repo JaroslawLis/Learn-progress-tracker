@@ -11,6 +11,7 @@
 
     <script src="vendor/alertify/alertify.min.js"></script>
     <script src="script.js"></script>
+    <script src="test.js"></script>
     <link rel="stylesheet" href="vendor/alertify/alertify.core.css" />
 
     <link rel="stylesheet" href="vendor/alertify/alertify.default.css"  id="toggleCSS" />
