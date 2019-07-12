@@ -210,9 +210,6 @@ $(document).ready(function () {
     }
 
 
-
-
-
     function showDataDiv(all_of_tasks) {
         // $('#container').hide();
         $("#table_div").empty();

@@ -2,7 +2,14 @@
 include('dbconnect.php');
 
 $all_of_tasks = $_GET['all_of_tasks'];
+
 $sql = "select * from tasks where category=4 AND enddate IS NULL";
+// $sql = "SET @mindate := ( select MIN(`begindate`)  from tasks where category=4 AND enddate IS NULL) select * from tasks where category=4 AND enddate IS NULL OR (DATEDIFF(DATE(enddate), @mindate) > 0)";
+
+
+
+
+
 
 if ($all_of_tasks == 'true') {
     $sql = "select * from tasks where category=4";

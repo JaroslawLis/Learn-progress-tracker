@@ -61,7 +61,7 @@
                      <input type="number" name="end_course" id="end_course" placeholder="Końcowy etap"  min="0" max="3000">
 <div class="buttons">
                     <input type="button" value="zapisz" id="write_elements">
-<button id="cancel-writesubtaks_new">anuluj</button>
+<button type="button" id="cancel-writesubtaks_new">anuluj</button>
 </div>
 
 </form>
